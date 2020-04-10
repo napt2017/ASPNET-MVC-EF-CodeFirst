@@ -4,7 +4,7 @@ namespace ASPNET_MVC_EF_CodeFirst.DbContext
 {
     public class AssignmentDbContext : System.Data.Entity.DbContext
     {
-        public AssignmentDbContext() :base("AssignmentDB")
+        public AssignmentDbContext() :base("NewAssignmentDB")
         {
 
         }

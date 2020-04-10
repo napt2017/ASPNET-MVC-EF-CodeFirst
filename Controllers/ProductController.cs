@@ -1,7 +1,9 @@
-﻿using Antlr.Runtime.Misc;
-using ASPNET_MVC_EF_CodeFirst.DbContext;
+﻿using ASPNET_MVC_EF_CodeFirst.DbContext;
 using ASPNET_MVC_EF_CodeFirst.Models;
-using System.Linq; 
+using ClosedXML.Excel;
+using System.IO;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ASPNET_MVC_EF_CodeFirst.Controllers
@@ -99,6 +101,86 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
             dbContext.Products.Remove(foundProduct);
             dbContext.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Import(HttpPostedFileBase file)
+        {
+            // Validate 
+            if (file.FileName.EndsWith("xlsx"))
+            {
+                var wb = new XLWorkbook(file.InputStream);
+                if (wb.TryGetWorksheet("Products", out var wSheet))
+                {
+                    var allRow = wSheet.Rows();
+                    var rowIndex = 0;
+                    foreach (var row in allRow)
+                    {
+                        if (rowIndex >0)
+                        {
+                            var allCellOfRow = row.Cells().ToArray(); 
+                            var name = allCellOfRow[1].Value.ToString();
+                            var price = float.Parse(allCellOfRow[2].Value.ToString());
+                            var quantity = int.Parse(allCellOfRow[3].Value.ToString());
+
+                            var newProduct = new Product
+                            {
+                                Name = name,
+                                Price = price,
+                                Quantity = quantity
+
+                            };
+                            dbContext.Products.Add(newProduct);
+                        }
+                        rowIndex++;
+                    }
+                    dbContext.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("NotFound");
+            }
+            return RedirectToAction("NotFound");
+        }
+
+        [HttpGet]
+        public ActionResult Export()
+        {
+            // Create workbook and work sheet
+            var wb = new XLWorkbook();
+            var productSheet = wb.AddWorksheet("Products");
+            var currentRow = 1;
+
+            // Add first row header
+            productSheet.Cell(currentRow, 1).Value = "Id";
+            productSheet.Cell(currentRow, 2).Value = "Name";
+            productSheet.Cell(currentRow, 3).Value = "Price";
+            productSheet.Cell(currentRow, 4).Value = "Quantity";
+
+            // Get data from db
+            var allProduct = dbContext.Products.ToList();
+            foreach (var product in allProduct)
+            {
+                currentRow++;
+                productSheet.Cell(currentRow, 1).Value = product.Id;
+                productSheet.Cell(currentRow, 2).Value = product.Name;
+                productSheet.Cell(currentRow, 3).Value = product.Price;
+                productSheet.Cell(currentRow, 4).Value = product.Quantity;
+            }
+
+            // Convert to byte array then response to client 
+            using (var memoryStream = new MemoryStream())
+            {
+                wb.SaveAs(memoryStream);
+                var byteArrayContent = memoryStream.ToArray();
+                var responseResult = File(byteArrayContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "all-product.xlsx");
+                return responseResult;
+            }
         }
 
         public HttpStatusCodeResult NotFound()
