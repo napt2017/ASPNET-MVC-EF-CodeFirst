@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ajax Controller</h2>
+
+<fieldset>
+    <legend>Call ajax using fetch function</legend>
+    <p id="lbWan">Your wan ip is : </p>
+    <button id="btnAjaxFetch">Get Wan Ip</button>
+</fieldset>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let lbWan = document.querySelector("#lbWan");
+        let btnFetch = document.querySelector("#btnAjaxFetch");
+        btnFetch.addEventListener("click", function () {
+            fetch("https://httpbin.org/ip").then(resp => resp.json())
+                .then(json => lbWan.innerText = json.origin);
+        });
+    });
+</script>
+
+<fieldset>
+    <legend>Call ajax using JQuery</legend>
+    <p id="lbJqueryWan">Your wan ip is : </p>
+    <button id="btnAjaxJquery">Get Wan Ip</button>
+</fieldset>
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $(function () {
+        $("#btnAjaxJquery").on("click", function () {
+            $.ajax("https://httpbin.org/ip", {
+                success: function (data) {
+                    $("#lbJqueryWan").text(data.origin);
+                }
+            });
+        });
+    });
+</script>

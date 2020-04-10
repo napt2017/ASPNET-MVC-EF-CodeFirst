@@ -148,6 +148,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DbContext\AssignmentDbContext.cs" />
@@ -203,6 +204,7 @@
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\Product\Import.cshtml" />
+    <Content Include="Views\Ajax\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
