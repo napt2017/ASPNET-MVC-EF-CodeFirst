@@ -9,5 +9,10 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
         {
             return View();
         }
+
+        public PartialViewResult ServerDateTime()
+        {
+            return PartialView("_ServerDateTimeInfo");
+        }
     }
 }

@@ -4,11 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Ajax Controller</h2>
-
+<h2>Ajax Controller Demo</h2>
 <fieldset>
-    <legend>Call ajax using fetch function</legend>
-    <p id="lbWan">Your wan ip is : </p>
+    <legend>Call Ajax Using Fetch Function</legend>
+    <p id="lbWan">Your wan ip is :</p>
     <button id="btnAjaxFetch">Get Wan Ip</button>
 </fieldset>
 
@@ -41,3 +40,16 @@
         });
     });
 </script>
+
+<div id="ServerTimeArea"></div>
+
+@Ajax.ActionLink("Get Server Time", "ServerDateTime", new AjaxOptions
+{
+    UpdateTargetId = "ServerTimeArea",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "GET"
+});
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

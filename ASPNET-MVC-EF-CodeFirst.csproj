@@ -156,6 +156,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ServerDateTime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -205,6 +208,7 @@
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\Product\Import.cshtml" />
     <Content Include="Views\Ajax\Index.cshtml" />
+    <Content Include="Views\Ajax\_ServerDateTimeInfo.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
