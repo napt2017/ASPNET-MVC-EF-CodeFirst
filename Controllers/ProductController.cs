@@ -112,7 +112,7 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
         [HttpPost]
         public ActionResult Import(HttpPostedFileBase file)
         {
-            // Validate 
+            // Validate file name
             if (file.FileName.EndsWith("xlsx"))
             {
                 var wb = new XLWorkbook(file.InputStream);
@@ -124,7 +124,7 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
                     {
                         if (rowIndex >0)
                         {
-                            var allCellOfRow = row.Cells().ToArray(); 
+                            var allCellOfRow = row.Cells().ToArray();
                             var name = allCellOfRow[1].Value.ToString();
                             var price = float.Parse(allCellOfRow[2].Value.ToString());
                             var quantity = int.Parse(allCellOfRow[3].Value.ToString());
@@ -134,16 +134,15 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
                                 Name = name,
                                 Price = price,
                                 Quantity = quantity
-
                             };
                             dbContext.Products.Add(newProduct);
+
                         }
                         rowIndex++;
                     }
                     dbContext.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                return RedirectToAction("NotFound");
             }
             return RedirectToAction("NotFound");
         }
@@ -151,7 +150,7 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
         [HttpGet]
         public ActionResult Export()
         {
-            // Create workbook and work sheet
+            // Create the workbook and worksheet
             var wb = new XLWorkbook();
             var productSheet = wb.AddWorksheet("Products");
             var currentRow = 1;
@@ -162,7 +161,7 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
             productSheet.Cell(currentRow, 3).Value = "Price";
             productSheet.Cell(currentRow, 4).Value = "Quantity";
 
-            // Get data from db
+            // Get all product from database
             var allProduct = dbContext.Products.ToList();
             foreach (var product in allProduct)
             {
@@ -173,7 +172,7 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
                 productSheet.Cell(currentRow, 4).Value = product.Quantity;
             }
 
-            // Convert to byte array then response to client 
+            // Convert workbook to byte array then response to client
             using (var memoryStream = new MemoryStream())
             {
                 wb.SaveAs(memoryStream);

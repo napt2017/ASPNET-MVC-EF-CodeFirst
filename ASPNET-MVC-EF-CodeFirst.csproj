@@ -206,9 +206,9 @@
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
-    <Content Include="Views\Product\Import.cshtml" />
     <Content Include="Views\Ajax\Index.cshtml" />
     <Content Include="Views\Ajax\_ServerDateTimeInfo.cshtml" />
+    <Content Include="Views\Product\Import.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
