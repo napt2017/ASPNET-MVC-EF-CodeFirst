@@ -6,7 +6,7 @@
 }
 
 <h2>Detail</h2>
-@Html.ActionLink("Export All Product", "Export")
+
 <div>
     <h4>Product</h4>
     <hr />
@@ -33,6 +33,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
         </dd>
 
     </dl>

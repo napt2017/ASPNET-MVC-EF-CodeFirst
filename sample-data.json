@@ -1,0 +1,1 @@
+[{"Id":0,"Name":"Nokia","Quantity":10,"Price":10.0,"Year":2020,"Manufacturer":{"Id":0,"Name":"Microsoft","Address":"USA","Products":null},"IsActive":false},{"Id":0,"Name":"Smart Phone","Quantity":20,"Price":40.0,"Year":2020,"Manufacturer":{"Id":0,"Name":"Apple","Address":"American","Products":null},"IsActive":false}]

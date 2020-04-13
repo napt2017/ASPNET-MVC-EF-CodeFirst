@@ -150,11 +150,30 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DbContext\AssignmentDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004130259391_InitDatabaseCreation.cs" />
+    <Compile Include="Migrations\202004130259391_InitDatabaseCreation.designer.cs">
+      <DependentUpon>202004130259391_InitDatabaseCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004130314082_AddNewActiveFieldToProductEntity.cs" />
+    <Compile Include="Migrations\202004130314082_AddNewActiveFieldToProductEntity.designer.cs">
+      <DependentUpon>202004130314082_AddNewActiveFieldToProductEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004130349291_OptimizeAllFieldsOfProductAndManufacture.cs" />
+    <Compile Include="Migrations\202004130349291_OptimizeAllFieldsOfProductAndManufacture.designer.cs">
+      <DependentUpon>202004130349291_OptimizeAllFieldsOfProductAndManufacture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004130406231_AddRelationFromManufactureToProduct.cs" />
+    <Compile Include="Migrations\202004130406231_AddRelationFromManufactureToProduct.designer.cs">
+      <DependentUpon>202004130406231_AddRelationFromManufactureToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ServerDateTime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,6 +193,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="sample-data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -201,14 +223,19 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Ajax\Index.cshtml" />
+    <Content Include="Views\Ajax\_ServerDateTimeInfo.cshtml" />
+    <Content Include="Views\Product\Import.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
-    <Content Include="Views\Ajax\Index.cshtml" />
-    <Content Include="Views\Ajax\_ServerDateTimeInfo.cshtml" />
-    <Content Include="Views\Product\Import.cshtml" />
+    <Content Include="Views\Manufacturers\Create.cshtml" />
+    <Content Include="Views\Manufacturers\Delete.cshtml" />
+    <Content Include="Views\Manufacturers\Details.cshtml" />
+    <Content Include="Views\Manufacturers\Edit.cshtml" />
+    <Content Include="Views\Manufacturers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -223,6 +250,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202004130259391_InitDatabaseCreation.resx">
+      <DependentUpon>202004130259391_InitDatabaseCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004130314082_AddNewActiveFieldToProductEntity.resx">
+      <DependentUpon>202004130314082_AddNewActiveFieldToProductEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004130349291_OptimizeAllFieldsOfProductAndManufacture.resx">
+      <DependentUpon>202004130349291_OptimizeAllFieldsOfProductAndManufacture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004130406231_AddRelationFromManufactureToProduct.resx">
+      <DependentUpon>202004130406231_AddRelationFromManufactureToProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

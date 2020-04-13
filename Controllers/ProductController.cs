@@ -1,6 +1,9 @@
 ﻿using ASPNET_MVC_EF_CodeFirst.DbContext;
 using ASPNET_MVC_EF_CodeFirst.Models;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -19,6 +22,7 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
          
         public ActionResult Index()
         {
+            InitDataBase();
             var allProduct = dbContext.Products.ToList(); 
             return View(allProduct);
         }
@@ -57,12 +61,14 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
             var name = formCollection.Get("Name");
             var quantity = int.Parse(formCollection.Get("Quantity"));
             var price = float.Parse(formCollection.Get("Price"));
+            var year = int.Parse(formCollection.Get("Year"));
 
-            var newProduct = new Product 
+            var newProduct = new Product
             {
                 Name = name,
                 Quantity = quantity,
-                Price = price
+                Price = price,
+                Year = year
             };
 
             dbContext.Products.Add(newProduct);
@@ -78,10 +84,12 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
             var name = formCollection.Get("Name");
             var quantity = int.Parse(formCollection.Get("Quantity"));
             var price = float.Parse(formCollection.Get("Price"));
+            var year = int.Parse(formCollection.Get("Year"));
 
             foundProduct.Name = name;
             foundProduct.Quantity = quantity;
             foundProduct.Price = price;
+            foundProduct.Year = year;
             dbContext.SaveChanges();
 
             return RedirectToAction("Index");
@@ -180,6 +188,52 @@ namespace ASPNET_MVC_EF_CodeFirst.Controllers
                 var responseResult = File(byteArrayContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "all-product.xlsx");
                 return responseResult;
             }
+        }
+
+        private void InitDataBase()
+        {
+            if (!dbContext.Products.Any())
+            {
+                //var products = new[]
+                //{
+                //    new Product
+                //    {
+                //        Name ="Nokia",
+                //        Quantity = 10,
+                //        Year = 2020,
+                //        Price = 10,
+                //        Manufacturer = new Manufacturer
+                //        {
+                //            Name ="Microsoft",
+                //            Address = "USA"
+                //        }
+                //    },
+                //    new Product
+                //    {
+                //        Name ="Smart Phone",
+                //        Quantity = 20,
+                //        Year = 2020,
+                //        Price = 40,
+                //        Manufacturer = new Manufacturer
+                //        {
+                //            Name ="Apple",
+                //            Address = "American"
+                //        }
+                //    }
+                //};
+
+                //var jsonString = JsonConvert.SerializeObject(products);
+                //System.IO.File.WriteAllText(@"D:\sample-data.json", jsonString);
+                //dbContext.Products.AddRange(products);
+                //dbContext.SaveChanges();
+
+                // Read data from json file
+                var jsonContent = System.IO.File.ReadAllText(@"D:\sample-data.json");
+                var products = JsonConvert.DeserializeObject<List<Product>>(jsonContent);
+                dbContext.Products.AddRange(products);
+                dbContext.SaveChanges();
+            }
+            
         }
 
         public HttpStatusCodeResult NotFound()
